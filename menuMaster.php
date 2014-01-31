@@ -23,7 +23,18 @@ class MenuMaster {
                 if(in_array($key, $this->choices)){
                    $restuarant = (int)trim($data[0]);
                    $price = (float)(trim($data[1]));
+                   /*
+                    Since we have no control of the order of the incomgin menu items we want to 
+                    choose the price of the cheaper option in the event there is a combo. 
+                    usually that will be a solo offering rather than a combo.
+                   */
+                   if(isset($this->foodItems[$restuarant][$key])){
+                       echo("hello");
+                       $oldPrice =  $this->foodItems[$restuarant][$key];
+                       $price = ($oldPrice<=$price)?$oldPrice:$price;
+                   }   
                    $this->foodItems[$restuarant][$key] = $price;
+                   
                    $this->restaurants[] = $restuarant;
                 }
                 
@@ -63,7 +74,8 @@ class MenuMaster {
             echo("NIL\n");
             return;
         }
-        echo("Winning Restaurant: $totalRestaurant and winning Price: $total\n");
+        $total = money_format($total,3);
+        echo("Winning Restaurant: $totalRestaurant and winning Price: $total");
     }
     
 }
