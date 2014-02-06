@@ -1,0 +1,17 @@
+Welcome to menuMaster:
+
+This program will accept a price file, a list of food items that someone wants to eat, and outputs the restaurant they should go to, along the total price it will cost them. 
+
+The price list is a CSV file in the format:
+restaurant ID, price, item label
+
+
+Execution: 
+Goto program directory
+Type:
+	php menuMaster.php <price_file>.csv item1 item2 .....etc.
+
+
+
+Enjoy!!
+
