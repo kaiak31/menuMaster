@@ -8,6 +8,7 @@ class MenuMaster {
     // helper array to populate and iterate through food matrix
     private $restaurants = array();
     private $choices = array();
+    //Stores the combos to be processed after initial food matrix population
     private $combos = array();
 
     function MenuMaster(&$argv) {
@@ -41,27 +42,13 @@ class MenuMaster {
                     continue;
                 }
 
-                //TODO: Some wierd warning 
-                if (!isset($data[2])) {
-                    continue;
-                }
-
                 $key = trim($data[2]);
                 /* this line has a foodItem the user wants, 
                  * We will store in the food matrix
                  */
                 if (in_array($key, $this->choices)) {
                     $price = (float) (trim($data[1]));
-                    /*
-                      Since we have no control of the order of the incomgin menu items we want to
-                      choose the price of the cheaper option in the event there is a combo.
-                      usually the will be a solo offering rather than a combo.
-
-                      if(isset($this->foodItems[$restuarant][$key])){
-                      $oldPrice =  $this->foodItems[$restuarant][$key];
-                      $price = ($oldPrice<=$price)?$oldPrice:$price;
-                      } */
-
+                    
                     $this->foodItems[$restaurant][$key] = $price;
                 }
             }
@@ -91,6 +78,7 @@ class MenuMaster {
         }
     }
     
+    //The most important function for combos. Hence the serious name. 
     function smash(&$matrix, &$combo){
         foreach($combo['keys'] as $foodItem){
             $matrix[$foodItem] = 0;
@@ -99,7 +87,7 @@ class MenuMaster {
     }
 
     function addCombo($restaurant, &$combo) {
-        //check to see if combo has all the choices or don't bother adding
+        //Either check the subtotal of the row or just added the combo. 
         $matrix = & $this->foodItems[$restaurant];
         $subTotal = 0.0;
         foreach ($combo['keys'] as $comboItem) {
