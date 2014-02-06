@@ -6,12 +6,24 @@ The price list is a CSV file in the format:
 restaurant ID, price, item label
 
 
+
+Program Overview:
+The program will read in the CSV file to create a food matrix based on the single item entries and populated by user choice(s) (restuarant x choices). If an entry is not one of the input choice, it will not be added to the matrix. There are however null placeholder in each restaurant row.  
+Combo items (value meals) are processed later and after the single items have been added to the matrix. Combo means also follow the same filter. For example: 
+	If the user want cheese and fries, and a combo contain cheese, fries, apples...etc. Then the program will add the combo with just cheese and fries and the total price of said combo. 
+ 
+While processing the combo items, the program will examine each row. If the row is missing a user choice (set to null) the combo and its individual food items are added to the restaurant row. If the combo does have an item that was already populated before the merge, its value will be replaced. For example:
+User input = cheese fries
+Combo: 10.00, cheese, fries, roast_duck
+Prior to combo Merge: resturant 1: cheese=4.00, fries:1.00. roast_duck=NULL
+After combo merge: resturant 1: cheese=10.00, fries:0.00. roast_duck=0.00
+
+After the combo merge each restaurant row within the food matrix is tallied. If there is a null food item, the tally stops and the process moves on to the next restaurant. The cheapest restaurant wins. 
+
+
 Execution: 
 Goto program directory
 Type:
 	php menuMaster.php <price_file>.csv item1 item2 .....etc.
 
-
-
-Enjoy!!
 
